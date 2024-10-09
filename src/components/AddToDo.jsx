@@ -2,14 +2,18 @@ import { useState } from 'react';
 import { useTodos } from "../context/UseTodos"
 
 const AddToDo = () => {
-    const { setTodos } = useTodos();
-    const [newTodo, setNewTodo] = useState('');
+    const { dispatch } = useTodos();
+    const [newTodo, setNewTodo] = useState("");
+
+    const resetUserInput = () => setNewTodo("")
 
     const handleSubmit = e => {
         e.preventDefault();
+
         if (!newTodo) return;
-        setTodos(prevTodos => [{ id: Date.now(), text: newTodo, completed: false }, ...prevTodos]);
-        setNewTodo('');
+        dispatch({ type: 'ADD_TODO', payload: newTodo });
+
+        resetUserInput();
     };
 
     return (

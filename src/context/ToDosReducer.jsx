@@ -9,6 +9,10 @@ export const toDosReducer = (state, action) => {
             return state.map(todo =>
                 todo.id === action.payload ? { ...todo, completed: !todo.completed } : todo
             );
+
+        case 'FETCH_TODOS_SUCCESS':
+            return action.payload;
+
         default:
             return state;
     }

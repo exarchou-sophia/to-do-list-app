@@ -1,10 +1,10 @@
-const ToDoItem = ({ todo, toggleTodo }) => {
+const ToDoItem = ({ todo, dispatch }) => {
     return (
         <li className='flex items-center mb-2'>
             <input
                 type='checkbox'
                 checked={todo.completed}
-                onChange={() => toggleTodo(todo.id)}
+                onChange={() => dispatch({ type: 'TOGGLE_TODO', payload: todo.id })}
                 className='mr-2'
             />
             {todo.text}

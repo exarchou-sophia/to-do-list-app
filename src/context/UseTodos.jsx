@@ -1,28 +1,19 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useReducer } from "react";
+import { toDosReducer } from "./ToDosReducer";
 
 const TodosContext = createContext();
 
-export const TodosProvider = props => {
-    const [todos, setTodos] = useState([]);
+export const TodosProvider = ({ children }) => {
+    const loadedTodos = localStorage.getItem("todos")
+    const todoList = loadedTodos ? JSON.parse(loadedTodos) : []
 
-    const toggleTodo = id => {
-        setTodos(prevTodos =>
-            prevTodos.map(todo => {
-                if (todo.id === id) {
-                    return { ...todo, completed: !todo.completed };
-                }
-                return todo;
-            })
-        );
-    };
+    const [todos, dispatch] = useReducer(toDosReducer, todoList);
 
     return (
-        <TodosContext.Provider value={{ todos, setTodos, toggleTodo }}>
-            {props.children}
+        <TodosContext.Provider value={{ todos, dispatch }}>
+            {children}
         </TodosContext.Provider>
     )
 }
 
-export const useTodos = () => {
-    return useContext(TodosContext);
-}
+export const useTodos = () => useContext(TodosContext);
