@@ -5,8 +5,19 @@ const TodosContext = createContext();
 export const TodosProvider = props => {
     const [todos, setTodos] = useState([]);
 
+    const toggleTodo = id => {
+        setTodos(prevTodos =>
+            prevTodos.map(todo => {
+                if (todo.id === id) {
+                    return { ...todo, completed: !todo.completed };
+                }
+                return todo;
+            })
+        );
+    };
+
     return (
-        <TodosContext.Provider value={{ todos, setTodos }}>
+        <TodosContext.Provider value={{ todos, setTodos, toggleTodo }}>
             {props.children}
         </TodosContext.Provider>
     )

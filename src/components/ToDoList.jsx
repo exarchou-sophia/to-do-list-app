@@ -1,12 +1,18 @@
 import ToDoItem from './ToDoItem';
 import { useTodos } from "../context/UseTodos"
 
-const ToDoList = ({ toggleTodo }) => {
-    const { todos } = useTodos();
+const ToDoList = ({ filter }) => {
+    const { todos, toggleTodo } = useTodos();
+
+    const filteredTodos = todos.filter(todo => {
+        if (filter === 'completed') return todo.completed;
+        if (filter === 'active') return !todo.completed;
+        return true; // For 'all', return everything
+    });
 
     return (
         <ul>
-            {todos.map(todo => (
+            {filteredTodos.map(todo => (
                 <ToDoItem key={todo.id} todo={todo} toggleTodo={toggleTodo} />
             ))}
         </ul>
