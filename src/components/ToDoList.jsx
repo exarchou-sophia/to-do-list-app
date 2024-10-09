@@ -5,12 +5,6 @@ import { useEffect } from 'react';
 const ToDoList = ({ filter }) => {
     const { todos, dispatch } = useTodos();
 
-    // useEffect(() => {
-    //     const storedToDos = localStorage.getItem("todos");
-    //     storedToDos &&
-    //         dispatch({ type: 'FETCH_TODOS_SUCCESS', payload: JSON.parse(storedToDos) });
-    // }, [dispatch]);
-
     useEffect(() => {
         localStorage.setItem('todos', JSON.stringify(todos));
     }, [todos]);

@@ -5,13 +5,11 @@ export const toDosReducer = (state, action) => {
                 { id: Date.now(), text: action.payload, completed: false },
                 ...state
             ];
+        // change from active to completed or vice versa
         case 'TOGGLE_TODO':
             return state.map(todo =>
                 todo.id === action.payload ? { ...todo, completed: !todo.completed } : todo
             );
-
-        case 'FETCH_TODOS_SUCCESS':
-            return action.payload;
 
         default:
             return state;
